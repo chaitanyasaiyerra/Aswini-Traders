@@ -46,7 +46,7 @@ aswini-traders/
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/YOUR_USERNAME/aswini-traders.git](https://github.com/YOUR_USERNAME/aswini-traders.git)
+git clone https://github.com/chaitanyasaiyerra/Aswini-Traders.git
 cd aswini-traders
 ```
 
