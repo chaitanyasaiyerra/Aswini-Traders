@@ -789,15 +789,36 @@ export default function App() {
     return enrichedCartItems.reduce((sum, item) => sum + item.subtotal, 0);
   }, [enrichedCartItems]);
 
-  const navigateTo = (page, options = {}) => {
+ // Enhanced navigation that updates browser history so the Back button works smoothly
+  const navigateTo = (page, options = {}, pushHistory = true) => {
     if (options.category !== undefined) setSelectedCategory(options.category);
     if (options.productId !== undefined) setSelectedProductId(options.productId);
     if (options.search !== undefined) setGlobalSearch(options.search);
+    
     setCurrentPage(page);
     setMobileMenuOpen(false);
     setOpenDropdown(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (pushHistory) {
+      const stateObj = { page, ...options };
+      const newUrl = options.productId ? `/?product=${options.productId}` : page === 'home' ? '/' : `/#${page}`;
+      window.history.pushState(stateObj, '', newUrl);
+    }
   };
+
+  // Listen to browser Back / Forward button clicks
+  useEffect(() => {
+    const handlePopState = (event) => {
+      if (event.state) {
+        navigateTo(event.state.page || 'home', event.state, false);
+      } else {
+        navigateTo('home', {}, false);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const handleViewProduct = (product) => {
     setSelectedProductId(product.id);
