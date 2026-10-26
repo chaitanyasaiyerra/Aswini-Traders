@@ -312,15 +312,6 @@ const ProductCard = ({ product, isWishlisted, onToggleWishlist, onAddToCart, onV
           <img
             src={product.images?.[0] || 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80'}
             alt={product.name}
-
-            onClick={(event) => {
-              if (window.matchMedia?.('(hover: none)').matches) {
-                event.stopPropagation();
-                setIsTouchZoomed((zoomed) => !zoomed);
-              }
-            }}
-
-            
             className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
           />
